@@ -7,14 +7,13 @@ provider "aws" {
 
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = "bucket-automation-testing"
-}
+  bucket = "my-s3-bucket-for-jenkins"
+  }
 
-
-resource "aws_s3_object" "object" {
-bucket = aws_s3_bucket.bucket.bucket
-key    = "Customers.csv"
-source = "C:/Users/DELL/Desktop/AWS_Automation/Customers.csv"
+  resource "aws_s3_object" "object" {
+  bucket = aws_s3_bucket.bucket.bucket
+  key    = "Customers.csv"
+  source = "C:/Users/DELL/Desktop/AWS_Automation/temp/Customers.csv"
 }
 
 
@@ -23,6 +22,7 @@ resource "aws_db_instance" "myrdsdb" {
   max_allocated_storage = 10
   db_name              = "myrdsdb"
   engine               = "mysql"
+  identifier           = "database-1"
   engine_version       = "8.0.40"
   instance_class       = "db.t3.micro"
   username             = "admin"
@@ -30,8 +30,15 @@ resource "aws_db_instance" "myrdsdb" {
   parameter_group_name = "default.mysql8.0"
   storage_type         = "gp2"
   skip_final_snapshot  = true
-  publicly_accessible = true
-  identifier = "database-1"
-  
+  publicly_accessible  = true
+}
+
+resource "aws_ecr_repository" "image" {
+  name                 = "s3-to-rds"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
