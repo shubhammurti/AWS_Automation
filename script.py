@@ -1,16 +1,3 @@
-"""
-For Dockerfile "pip install boto3 mysql-connector-python"
-
-CREATE TABLE customers (
-    customer_id INT PRIMARY KEY,
-    Genre VARCHAR(100),
-    Age VARCHAR(100),
-    Annual_Income VARCHAR(20)
-);
-
-SELECT * FROM customers;
-"""
-
 import subprocess
 import boto3
 import mysql.connector
