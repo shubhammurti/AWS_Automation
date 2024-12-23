@@ -1,10 +1,8 @@
 provider "aws" {
   region     = "us-east-1"
-  access_key = ""
-  secret_key = ""
+  access_key = "***"
+  secret_key = "***"
 }
-
-
 
 resource "aws_s3_bucket" "bucket" {
   bucket = "my-s3-bucket-for-jenkins"
@@ -13,7 +11,7 @@ resource "aws_s3_bucket" "bucket" {
   resource "aws_s3_object" "object" {
   bucket = aws_s3_bucket.bucket.bucket
   key    = "Customers.csv"
-  source = "C:/Users/DELL/Desktop/AWS_Automation/temp/Customers.csv"
+  source = "/var/lib/jenkins/workspace/Jenkins-Pipeline/JenkinsPipeline/Customers.csv"
 }
 
 
@@ -42,3 +40,6 @@ resource "aws_ecr_repository" "image" {
   }
 }
 
+output "rds_endpoint" {
+  value = aws_db_instance.myrdsdb.endpoint
+}
